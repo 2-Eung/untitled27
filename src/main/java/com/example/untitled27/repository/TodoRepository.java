@@ -24,10 +24,16 @@ public class TodoRepository {
         return todo;
     };
 
-    public List<Todo> findAllByUserId(int userId) {
-        String sql = "SELECT * FROM todo WHERE user id = ? ORDER BY id";
+    public List<Todo> findAllByUserId(int userId) { // 전체조회
+        String sql = "SELECT * FROM todo WHERE user_id = ? ORDER BY id";
 
         return jdbcTemplate.query(sql, todoRowMapper, userId);
+    }
+
+    public Todo findByIdAndUserId(int id, int userId) { // 내것만 조회
+        String sql = "SELECT * FROM todo WHERE id = ? AND user_id = ?";
+
+        return jdbcTemplate.queryForObject(sql, todoRowMapper, id , userId);
     }
 
     public int save(Todo todo) {
@@ -35,5 +41,18 @@ public class TodoRepository {
 
         return jdbcTemplate.update(sql, todo.getUserId(), todo.getTitle(), todo.isCompleted());
     }                                                                   // @Getter 에서 boolean 값은 is 로 시작한다
+
+    public int update(Todo todo) {
+        String sql = "UPDATE todo SET title = ?, completed = ? WHERE id = ? AND user_id = ?";
+
+        return jdbcTemplate.update(sql, todo.getTitle(), todo.isCompleted(), todo.getId(), todo.getUserId());
+    }
+
+    public int deleteByIdAndUserId(int id, int userId) {
+        String sql = "DELETE FROM todo WHERE id = ? AND user_id = ?"; // id 도 맞고 userId 도 맞아야 한다
+
+        return jdbcTemplate.update(sql, id, userId);
+    }
+
 
 }

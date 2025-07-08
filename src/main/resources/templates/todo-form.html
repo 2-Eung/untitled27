@@ -2,12 +2,13 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8"/>
-  <title>➕ 할 일 추가</title>
+  <title th:text="${todoDto.id} == null ? '➕ 할 일 추가' : '✏️ 할 일 수정'"></title>
   <link rel="stylesheet" th:href="@{/styles.css}"/>
 </head>
 <body class="container">
-<h1>➕ 할 일 추가</h1>
-<form th:action="@{/todos/add}" th:object="${todoDto}" method="post" class="form-container">
+<h1 th:text="${todoDto.id} == null ? '➕ 할 일 추가' : '✏️ 할 일 수정'"></h1>
+<form th:action="${todoDto.id} == null ? @{/todos/add} : @{/todos/edit}" th:object="${todoDto}" method="post" class="form-container">
+  <input type="hidden" th:field="*{id}" />
   <p>
     <label>
       제목:

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>📝 할 일 목록</title>
+    <link rel="stylesheet" th:href="@{/styles.css}"/>
+</head>
+<body class="container">
+<h1>📝 내 할 일</h1>
+<p>
+    <a th:href="@{/todos/add}" class="btn">➕ 추가</a>
+    <a th:href="@{/logout}" class="btn cancel">로그아웃</a>
+</p>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>📝 회원가입</title>
+  <link rel="stylesheet" th:href="@{/styles.css}"/>
+</head>
+<body>
+<h1>📝 회원가입</h1>
+
+<div th:if="${error}" class="error" th:text="${error}"></div>
+<form th:action="@{/signup}" th:object="${signupDto}" method="post" class="form-container">
+                            <!--object : 객체형태로 받는다-->
+  <p>
+    <label>
+      아이디:
+      <input type="text" th:field="*{username}" />
+    </label>
+  <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+  <!--유저네임에 에러가 발생했다면 (DTO 의 조건에 위배가 되면) 메세지 출력 (DTO 에 있는 메세지 ) html 에서 작성해도 되긴함-->
+  </p>
+  <p>
+    <label>
+      패스워드:
+      <input type="password" th:field="*{password}" />
+    </label>
+  <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+  </p>
+  <button type="submit">가입하기</button>
+  <a th:href="@{/login}" class="cancel">로그인</a>
+</form>
+
+</body>
+</html>

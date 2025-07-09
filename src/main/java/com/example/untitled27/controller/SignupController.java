@@ -32,17 +32,17 @@ public class SignupController {
     } // DTO 활용
                             // 서버에서 받아올때 검증해야하므로 controller 에서 적는다.
     @PostMapping("/signup") // @Valid : 검증절차를 수행해라 라는 어노테이션 (검증방법은 DTO에 명시)
-    public String doSignup(@Valid @ModelAttribute("signupDto") SignupDto signupDTO, // 검사하기
+    public String doSignup(@Valid @ModelAttribute SignupDto signupDto, // 검사하기
                            BindingResult bindingResult, // 검사결과 저장하기 (요번에 새로 추가한 SpringBoot 기능 validation 에 포함)
                            Model model) {
-        if (userRepository.findByUsername(signupDTO.getUsername()) != null) { // 중복 가입 여부 체크
+        if (userRepository.findByUsername(signupDto.getUsername()) != null) { // 중복 가입 여부 체크
             model.addAttribute("error", "이미 사용 중인 아이디입니다");
 
             return "signup";             // 중복이면 다시 만들어라
         }
         User user = User.builder()
-                .username(signupDTO.getUsername())
-                .password(signupDTO.getPassword())
+                .username(signupDto.getUsername())
+                .password(signupDto.getPassword())
                 .build();
         userRepository.save(user); // 저장
 
